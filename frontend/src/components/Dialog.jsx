@@ -11,7 +11,7 @@ const Dialog = () => {
   function handleSubmit(e) {
           e.preventDefault();
           axios
-      .post("http://localhost:8081/students",{name, stuClass, subjects, month, password})
+      .post("https://crud-g867.onrender.com/students",{name, stuClass, subjects, month, password})
       .then(response =>{console.log(response.data);  window.location.reload();}) 
       .catch((error) => console.error("Error fetching data:", error));
 
