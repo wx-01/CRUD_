@@ -1,17 +1,19 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
+
 export default function Tables() {
   const [students, setStudents] = useState([]);
 
   useEffect(() => {
-    axios.get("http://localhost:8081/students")
+    axios.get("https://crud-g867.onrender.com/students")
       .then((response) => setStudents(response.data)) // Access data from response
       .catch((error) => console.error("Error fetching data:", error));
   }, []);
 
   const handleDelete = (id) => {
-    axios.delete(`http://localhost:8081/students/${id}`)
+    axios.delete(`https://crud-g867.onrender.com/students/${id}`)
+
       .then((response) => {
         console.log(response.data);
          window.location.reload(); // Reload the page to see the changes
