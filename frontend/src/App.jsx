@@ -9,10 +9,10 @@ function App() {
         <Route
           path="/"
           element={
-            <>
+            <main className="max-w-screen">
               <Navbar />
               <Content />
-            </>
+            </main>
           }
         />
         {/* Add more routes as needed */}

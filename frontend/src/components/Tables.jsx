@@ -23,11 +23,11 @@ export default function Tables() {
 
   return (
     <>
-      <div className="overflow-x-auto m-5">
-        <table className="table bg-base-100 ">
+      <div className="overflow-x-auto m-1">
+        <table className="table bg-base-100">
           {/* head */}
           <thead>
-            <tr>
+            <tr >
               <th></th>
               <th>Name</th>
               <th>CLass</th>
@@ -47,7 +47,7 @@ export default function Tables() {
                  <td>{student.month}</td>
                
                  <td>
-                  <button className="btn btn-error" onClick={() => handleDelete(student.id)}>Delete</button>
+                  <button className="btn btn-error p-2" onClick={() => handleDelete(student.id)}>Delete</button>
                  </td>
                </tr>
               ))}
