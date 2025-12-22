@@ -9,24 +9,28 @@ const Dialog = () => {
   const [password, setPassword] = useState("");
 
   function handleSubmit(e) {
-          e.preventDefault();
-          axios
-      .post("https://crud-g867.onrender.com/students",{name, stuClass, subjects, month, password})
-      .then(response =>{console.log(response.data);  window.location.reload();}) 
+    e.preventDefault();
+    axios
+      .post("http://localhost:8081/students", {
+        name,
+        class: stuClass,
+        subjects,
+        password,
+      })
+      .then((response) => {
+        console.log(response.data);
+        window.location.reload();
+      })
       .catch((error) => console.error("Error fetching data:", error));
-
   }
 
-
   return (
-          
     <dialog id="my_modal_5" className="modal modal-bottom sm:modal-middle">
       <div className="modal-box flex items-center justify-center bg-transparent">
-        <form 
-           onSubmit={handleSubmit}
+        <form
+          onSubmit={handleSubmit}
           className="fieldset bg-secondary border-base-300 rounded-box w-xs border p-4"
         >
-          
           <legend className="fieldset-legend">Add Student</legend>
 
           <label className="label">Name</label>
@@ -78,15 +82,22 @@ const Dialog = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
 
-<div className="flex justify-around mt-4">
-           <button type="submit" className="btn btn-primary" onClick={handleSubmit}>
-             Add
+          <div className="flex justify-around mt-4">
+            <button
+              type="submit"
+              className="btn btn-primary"
+              // onClick={handleSubmit}
+            >
+              Add
             </button>
-           <button type="button" className="btn btn-primary"  onClick={() => document.getElementById("my_modal_5").close()}>
-             Close
-          </button>
-         </div>
-          
+            <button
+              type="button"
+              className="btn btn-primary"
+              onClick={() => document.getElementById("my_modal_5").close()}
+            >
+              Close
+            </button>
+          </div>
         </form>
       </div>
     </dialog>

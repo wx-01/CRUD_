@@ -1,46 +1,86 @@
-import express from 'express';
-import cors from 'cors';
-import { getStudent,getStudents,postStudent,deleteStudent} from './database.js';
-import { fileURLToPath } from 'url';
-import { dirname, join } from 'path';
-
-// Get the directory name of the current module
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+import express from "express";
+import cors from "cors";
+import {
+  getStudents,
+  addStudent,
+  deleteStudent,
+  updateStudent,
+  getStudentFees,
+  updateFeeStatus,
+} from "./database.js";
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Serve static files from the React frontend app
-const frontendBuildPath = join(__dirname, '../../frontend/dist');
-app.use(express.static(frontendBuildPath));
+/* ---------- STUDENTS ---------- */
 
-
-app.get('/students',async (req,res)=>{
-          const students =await getStudents(req.body);
-          res.json(students)
-})
-app.post('/students',async (req,res)=>{
-const students =await postStudent(req.body);
+// READ
+app.get("/students", async (req, res) => {
+  try {
+    const students = await getStudents();
+    res.json(students);
     console.log(students);
-    res.send('ok')
-})
+  } catch {
+    res.status(500).json({ error: "Failed to fetch students" });
+  }
+});
 
-app.delete('/students/:id', async (req, res) => {
-          const { id } = req.params; // get the id from URL
-          try {
-            const result = await deleteStudent(id); // call function to delete
-            res.json({ message: 'Student deleted successfully', result });
-          } catch (err) {
-            console.error("Delete error:", err);
-            res.status(500).json({ error: "Failed to delete student" });
-          }
-        });
-        
+// CREATE
+app.post("/students", async (req, res) => {
+  try {
+    console.log("receied");
+    await addStudent(req.body);
+    res.json({ message: "Student added successfully" });
+    console.log(req.body);
+  } catch (err) {
+    console.error("Add student error:", err);
+    res.status(500).json({ error: err.message });
+  }
+});
 
+// UPDATE
+app.put("/students/:id", async (req, res) => {
+  try {
+    await updateStudent(req.params.id, req.body);
+    res.json({ message: "Student updated successfully" });
+  } catch {
+    res.status(500).json({ error: "Failed to update student" });
+  }
+});
 
-app.listen(8081,()=>{
-console.log("listening..")
+// DELETE
+app.delete("/students/:id", async (req, res) => {
+  try {
+    await deleteStudent(req.params.id);
+    res.json({ message: "Student deleted successfully" });
+  } catch {
+    res.status(500).json({ error: "Failed to delete student" });
+  }
+});
 
-})
+/* ---------- FEES ---------- */
+
+// READ
+app.get("/fees/:studentId", async (req, res) => {
+  try {
+    const fees = await getStudentFees(req.params.studentId);
+    res.json(fees);
+  } catch {
+    res.status(500).json({ error: "Failed to fetch fees" });
+  }
+});
+
+// UPDATE (Mark Paid / Unpaid)
+app.put("/fees/:id", async (req, res) => {
+  try {
+    await updateFeeStatus(req.params.id, req.body.status);
+    res.json({ message: "Fee status updated" });
+  } catch {
+    res.status(500).json({ error: "Failed to update fee status" });
+  }
+});
+
+app.listen(8081, () => {
+  console.log("🚀 Server running on port 8081");
+});
