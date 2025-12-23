@@ -11,7 +11,7 @@ const Dialog = () => {
   function handleSubmit(e) {
     e.preventDefault();
     axios
-      .post("http://localhost:8081/students", {
+      .post("https://dbms-proj-hghl.onrender.com/students", {
         name,
         class: stuClass,
         subjects,

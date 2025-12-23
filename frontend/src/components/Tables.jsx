@@ -12,14 +12,14 @@ export default function Tables() {
 
   const fetchStudents = () => {
     axios
-      .get("http://localhost:8081/students")
+      .get("https://dbms-proj-hghl.onrender.com/students")
       .then((res) => setStudents(res.data))
       .catch((err) => console.error(err));
   };
 
   const handleDelete = (id) => {
     axios
-      .delete(`http://localhost:8081/students/${id}`)
+      .delete(`https://dbms-proj-hghl.onrender.com/students/${id}`)
       .then(() => fetchStudents())
       .catch((err) => console.error(err));
   };
@@ -35,7 +35,7 @@ export default function Tables() {
 
   const saveEdit = (id) => {
     axios
-      .put(`http://localhost:8081/students/${id}`, {
+      .put(`https://dbms-proj-hghl.onrender.com/students/${id}`, {
         name: editData.name,
         class: editData.class,
         subjects: editData.subject_count,
