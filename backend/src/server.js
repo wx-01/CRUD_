@@ -8,11 +8,18 @@ import {
   getStudentFees,
   updateFeeStatus,
 } from "./database.js";
+import { fileURLToPath } from "url";
+import { dirname, join } from "path";
 
+// Get the directory name of the current module
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 const app = express();
 app.use(cors());
 app.use(express.json());
-
+// Serve static files from the React frontend app
+const frontendBuildPath = join(__dirname, "../../frontend/dist");
+app.use(express.static(frontendBuildPath));
 /* ---------- STUDENTS ---------- */
 
 // READ
